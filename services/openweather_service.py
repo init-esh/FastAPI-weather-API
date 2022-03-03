@@ -1,4 +1,4 @@
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict, Any
 from infrastructure import weather_cache
 import httpx
 
@@ -7,7 +7,7 @@ from models.validation_error import ValidationError
 api_key: Optional[str] = None
 
 
-async def get_report_async(city: str, state: Optional[str], country: str, unit: str) -> dict:
+async def get_report_async(city: str, state: Optional[str], country: str, unit: str) -> Optional[dict]:
     city, state, country, unit = validate_units(city, state, country, unit)
     if forecast := weather_cache.get_weather(city, state, country, unit):
         return forecast

@@ -1,5 +1,5 @@
 import uuid
-from typing import List
+from typing import Optional,Callable, List, Union, Any
 import datetime
 from models.location import Location
 from models.reports import Report
@@ -21,5 +21,6 @@ async def add_report(description: str, location: Location) -> Report:
     # if using real db use async calls
 
     __reports.append(report)
-    __reports.sort(key=lambda r: r.created_date, reverse=True)
+    func: Callable[[Report], Optional[Any]]=lambda r: r.created_date
+    __reports.sort(key=func, reverse=True)
     return report
